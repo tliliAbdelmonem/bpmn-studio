@@ -1,9 +1,12 @@
 /*
  * The only stylesheet in the web app (see CLAUDE.md).
- * Components use Tailwind utility classes inline; bpmn-js / diagram-js /
- * properties-panel CSS is registered here in Phase 4.
+ * Components use Tailwind utility classes inline; this file only adds Tailwind
+ * and the bpmn-js / diagram-js / bpmn-font assets, which must be global.
  */
 @import 'tailwindcss';
+@import 'bpmn-js/dist/assets/diagram-js.css';
+@import 'bpmn-js/dist/assets/bpmn-js.css';
+@import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
 
 @layer base {
   html,
