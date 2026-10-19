@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - '@swc/core'
+  - esbuild
+  - nx
+  - lmdb
+  - msgpackr-extract
+  - '@parcel/watcher'
+  - '@nestjs/core'

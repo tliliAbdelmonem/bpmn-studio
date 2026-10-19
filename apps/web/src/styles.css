@@ -1,0 +1,13 @@
+/*
+ * The only stylesheet in the web app (see CLAUDE.md).
+ * Components use Tailwind utility classes inline; bpmn-js / diagram-js /
+ * properties-panel CSS is registered here in Phase 4.
+ */
+@import 'tailwindcss';
+
+@layer base {
+  html,
+  body {
+    @apply h-full bg-slate-50 text-slate-900 antialiased;
+  }
+}
