@@ -69,5 +69,6 @@
       "style": "css",
       "unitTestRunner": "vitest-angular"
     }
-  }
+  },
+  "analytics": true
 }
