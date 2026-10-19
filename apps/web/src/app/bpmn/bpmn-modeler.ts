@@ -23,6 +23,7 @@ import {
 } from 'bpmn-js-properties-panel';
 import ZeebeBehaviorsModule from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
 import zeebeModdle from 'zeebe-bpmn-moddle/resources/zeebe.json';
+import { textRendererConfig } from './diagram-text';
 
 /** The part of diagram-js' Canvas used here. */
 interface Canvas {
@@ -112,6 +113,7 @@ export class BpmnModeler implements AfterViewInit, OnDestroy {
           ZeebeBehaviorsModule,
         ],
         moddleExtensions: { zeebe: zeebeModdle },
+        textRenderer: textRendererConfig(this.canvasRef().nativeElement),
       });
       instance.on<CommandStackChanged>('commandStack.changed', ({ trigger }) => {
         if (trigger !== 'clear') this.changed.emit();

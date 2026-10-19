@@ -15,6 +15,7 @@ import {
   viewChild,
 } from '@angular/core';
 import NavigatedViewer from 'bpmn-js/lib/NavigatedViewer';
+import { textRendererConfig } from './diagram-text';
 
 /** The part of diagram-js' Canvas used here (diagram-js is not a direct dependency). */
 interface Canvas {
@@ -73,7 +74,11 @@ export class BpmnViewer implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (!this.isBrowser) return;
     const viewer = this.zone.runOutsideAngular(
-      () => new NavigatedViewer({ container: this.canvasRef().nativeElement }),
+      () =>
+        new NavigatedViewer({
+          container: this.canvasRef().nativeElement,
+          textRenderer: textRendererConfig(this.canvasRef().nativeElement),
+        }),
     );
     this.viewer.set(viewer);
   }

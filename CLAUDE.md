@@ -44,7 +44,7 @@ Note: npm `latest` is already Angular 22 / NestJS 12. Always install with an exp
 - Pages are thin. bpmn-js logic lives in reusable components under `apps/web/src/app/bpmn/`.
 - Shared DTO types come from `@bpmn-studio/shared`; never redeclare API shapes in the web app.
 - Reuse the UI primitives in `apps/web/src/app/shared/ui/`: `bsButton` directive (variants primary/secondary/danger/ghost), `bs-dialog` (native `<dialog>`), `bs-confirm-dialog`, `bs-toast-outlet` + `ToastService`. API errors are `ProblemDetails`; show them with `problemMessage()`.
-- Read-only diagrams use `bs-bpmn-viewer` (`apps/web/src/app/bpmn/bpmn-viewer.ts`); editing uses `bs-bpmn-modeler` (`bpmn-modeler.ts`: Modeler + Zeebe properties panel + Camunda Cloud behaviors). bpmn-js stays in lazy chunks.
+- Read-only diagrams use `bs-bpmn-viewer` (`apps/web/src/app/bpmn/bpmn-viewer.ts`); editing uses `bs-bpmn-modeler` (`bpmn-modeler.ts`: Modeler + Zeebe properties panel + Camunda Cloud behaviors). bpmn-js stays in lazy chunks. Both pass `textRendererConfig()` so diagram labels use the app font; the bpmn.io theme (`--bio-*` tokens on `.bio-theme-parent`) is mapped to Tailwind tokens at the end of `styles.css`. Prefer token overrides over class selectors there.
 - Routed pages with unsaved state implement `HasUnsavedChanges` and use `unsavedChangesGuard`, plus a `(window:beforeunload)` host listener.
 - Web unit tests stub `bs-bpmn-modeler` (bpmn-js needs real layout). `apps/web/vitest.config.ts` inlines `@bpmn-io/properties-panel` because its vendored preact fails Node's ESM resolution.
 

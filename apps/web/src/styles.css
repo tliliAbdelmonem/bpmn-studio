@@ -15,3 +15,97 @@
     @apply h-full bg-slate-50 text-slate-900 antialiased;
   }
 }
+
+/*
+ * bpmn.io theme -> app design tokens.
+ * The canvas, palette, popup menus and properties panel all read the `--bio-*` tokens on
+ * `.bio-theme-parent`. Overriding them here (unlayered, after the imports above) maps the whole
+ * editor onto the Tailwind palette the rest of the app uses: indigo for primary/focus, slate for
+ * surfaces, text and borders, rose/amber for errors/warnings.
+ */
+.bio-theme-parent {
+  --bio-surface: var(--color-white);
+  --bio-surface-overlay: var(--color-white);
+  --bio-surface-subtle: var(--color-slate-50);
+  --bio-surface-medium: var(--color-slate-100);
+  --bio-surface-strong: var(--color-slate-200);
+  --bio-surface-inverted: var(--color-slate-800);
+  --bio-surface-inverted-subtle: var(--color-slate-600);
+
+  --bio-text: var(--color-slate-900);
+  --bio-text-subtle: var(--color-slate-600);
+  --bio-text-subtlest: var(--color-slate-500);
+  --bio-text-on-primary: var(--color-white);
+  --bio-text-on-inverted: var(--color-white);
+
+  --bio-border: var(--color-slate-200);
+  --bio-border-subtle: var(--color-slate-200);
+  --bio-border-input: var(--color-slate-300);
+  --bio-border-disabled: var(--color-slate-100);
+
+  --bio-primary: var(--color-indigo-600);
+  --bio-primary-hover: var(--color-indigo-500);
+  --bio-primary-surface: var(--color-indigo-50);
+  --bio-primary-surface-strong: var(--color-indigo-100);
+  --bio-info: var(--color-indigo-600);
+  --bio-info-on-inverted: var(--color-indigo-300);
+  --bio-neutral: var(--color-slate-500);
+  --bio-selected-surface: var(--color-indigo-50);
+  --bio-selected-text: var(--color-indigo-700);
+
+  --bio-focus: var(--color-indigo-500);
+  --bio-focus-surface: var(--color-indigo-50);
+  --bio-focus-ring: color-mix(in oklab, var(--color-indigo-500) 35%, transparent);
+  --bio-canvas-accent: var(--color-indigo-600);
+  --bio-canvas-accent-subtle: var(--color-indigo-300);
+
+  --bio-danger: var(--color-rose-600);
+  --bio-danger-hover: var(--color-rose-700);
+  --bio-danger-surface: var(--color-rose-100);
+  --bio-danger-surface-subtle: var(--color-rose-50);
+  --bio-focus-ring-danger: color-mix(in oklab, var(--color-rose-600) 35%, transparent);
+  --bio-warning: var(--color-amber-400);
+  --bio-warning-hover: var(--color-amber-500);
+  --bio-warning-surface: var(--color-amber-50);
+  --bio-warning-text: var(--color-amber-800);
+  --bio-focus-ring-warning: color-mix(in oklab, var(--color-amber-400) 35%, transparent);
+
+  --bio-shadow: color-mix(in oklab, var(--color-slate-900) 15%, transparent);
+  --bio-shadow-subtle: color-mix(in oklab, var(--color-slate-900) 6%, transparent);
+
+  --bio-radius-sm: var(--radius-sm);
+  --bio-radius-md: var(--radius-md);
+  --bio-radius-lg: var(--radius-lg);
+
+  /* Popup menus (replace / append) and canvas search use the app font, not IBM Plex Sans. */
+  --popup-font-family: var(--font-sans);
+  --popup-font-size: var(--text-sm);
+  --search-font-family: var(--font-sans);
+  --search-font-size: var(--text-sm);
+  --bjs-font-family: var(--font-sans);
+  --palette-background-color: var(--color-white);
+  --popup-border-color: var(--color-slate-200);
+}
+
+.bio-properties-panel {
+  --font-family: var(--font-sans);
+  --font-family-monospace: var(--font-mono);
+  --header-background-color: var(--color-slate-50);
+  --header-bottom-border-color: var(--color-slate-200);
+  --group-bottom-border-color: var(--color-slate-100);
+  --input-background-color: var(--color-white);
+}
+
+/* Keyboard focus on the canvas gets the app's focus ring; mouse focus shows none. */
+.djs-container svg:focus {
+  outline: none;
+}
+.djs-container svg:focus-visible {
+  outline: 2px solid var(--color-indigo-500);
+  outline-offset: -2px;
+}
+
+/* Palette: lifted like the app's cards (surface, border and radius come from the tokens above). */
+.djs-palette {
+  box-shadow: var(--shadow-sm);
+}
