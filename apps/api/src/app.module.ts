@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvironmentVariables, validateEnv } from './config/env.validation';
 import { buildTypeOrmOptions } from './database/typeorm-options';
 import { HealthModule } from './health/health.module';
+import { ModelsModule } from './models/models.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { HealthModule } from './health/health.module';
       }),
     }),
     HealthModule,
+    ModelsModule,
   ],
 })
 export class AppModule {}

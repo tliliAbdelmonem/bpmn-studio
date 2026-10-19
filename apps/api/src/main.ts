@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { API_PREFIX } from '@bpmn-studio/shared';
 import { AppModule } from './app.module';
@@ -9,10 +10,12 @@ import { createValidationPipe } from './common/validation';
 import { EnvironmentVariables } from './config/env.validation';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const config = app.get<ConfigService<EnvironmentVariables, true>>(ConfigService);
 
   app.setGlobalPrefix(API_PREFIX);
+  // BPMN XML travels in JSON bodies; the default 100 kB limit is too small.
+  app.useBodyParser('json', { limit: config.get('MAX_BPMN_SIZE_BYTES', { infer: true }) * 2 });
   app.useGlobalPipes(createValidationPipe());
   app.useGlobalFilters(new ProblemDetailsFilter());
   app.enableShutdownHooks();

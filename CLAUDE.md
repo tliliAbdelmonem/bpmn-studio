@@ -64,7 +64,10 @@ Note: npm `latest` is already Angular 22 / NestJS 12. Always install with an exp
 - Errors are RFC 9457 `application/problem+json` (`type`, `title`, `status`, `detail`, `instance`, optional `errors`) via one global exception filter.
 - BPMN XML is validated (well-formed + parses as BPMN with the Zeebe moddle) before being stored.
 - All Camunda HTTP calls live in `CamundaClientService`. Deploy sends multipart with field `resources`; never set `Content-Type` manually (let `FormData` set the boundary).
-- `BpmnModelVersion` rows are immutable. Restore creates a new version.
+- `BpmnModelVersion` rows are immutable. Restore creates a new version. New versions are appended in a transaction holding a row lock on the model (`VersionsService.append`).
+- `bpmn-moddle` is ESM-only: the API loads it with `require()` (Node >= 22.12) in `src/bpmn/bpmn-moddle.ts`, and Jest transforms it (`transformIgnorePatterns` in `apps/api/jest.config.cts`).
+- New migrations must be added to `apps/api/src/database/migrations/index.ts` (webpack bundle, no globs).
+- Test helpers live in `*.fixtures.ts` (excluded from the app build).
 
 ## Environment variables
 
@@ -99,9 +102,9 @@ pnpm infra:down
 
 Local URLs: API http://localhost:3000/api, Swagger http://localhost:3000/api/docs, Camunda REST http://localhost:8080/v2, Operate http://localhost:8080/operate (demo/demo).
 
-## Pinned versions (Phase 1)
+## Pinned versions
 
-Nx 22.7.12, Angular 21.2.x, NestJS 11, TypeScript 5.9, TypeORM 0.3.31, Tailwind 4.3.3, Camunda 8.10.4 (`camunda/camunda`), Postgres 17.6. Angular runs zoneless (no zone.js).
+Nx 22.7.12, Angular 21.2.x, NestJS 11, TypeScript 5.9, TypeORM 0.3.31, Tailwind 4.3.3, bpmn-moddle 10.3.1, zeebe-bpmn-moddle 2.0.0, Camunda 8.10.4 (`camunda/camunda`), Postgres 17.6. Angular runs zoneless (no zone.js).
 
 ## Repository layout (short)
 
