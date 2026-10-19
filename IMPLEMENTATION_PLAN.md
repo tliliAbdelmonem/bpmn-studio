@@ -1,6 +1,6 @@
 # IMPLEMENTATION_PLAN.md — BPMN Studio
 
-Status: **Phase 3 (frontend CRUD) done, awaiting approval for Phase 4.**
+Status: **Phase 4 (modeler) done, awaiting approval for Phase 5.**
 
 Decisions taken at Phase 0 approval (defaults accepted): Q1 official lightweight compose trimmed to the orchestration service, Camunda 8.10.4; Q2 zoneless; Q3 no SSR; Q6 delete cascades deployments; Q7 duplicate copies current version only; Q8 restore = new version; Q11 Vitest (web) / Jest (api); Q12 Node 22; Q13 TypeORM 0.3.31; Q14 code lives in `~/Projects/Tridevs/bpmn-studio` on the user's Mac. Phase 2: Q4 zeebe-bpmn-moddle 2.0.0 (bpmn-js-properties-panel 5.65 depends on ^2.0.0; 2.0 only changed package exports); bpmn-moddle 10.3.1 on the API, same as bpmn-js 18.31.
 
@@ -136,7 +136,7 @@ XML validation: reject if empty, not well-formed, root isn't `bpmn:definitions`,
 
 ### Phase 4 — Modeler
 
-- `BpmnModelerComponent`: inputs `xml`, outputs `changed`, `dirtyChange`, `error`; exposes `saveXML()`; Zeebe properties panel (`BpmnPropertiesPanelModule`, `BpmnPropertiesProviderModule`, `ZeebePropertiesProviderModule`, `ZeebeBehaviorsModule`, `zeebe` moddle extension).
+- `BpmnModelerComponent` (`bs-bpmn-modeler`): input `xml`, outputs `changed` (edit/undo/redo), `imported`, `importFailed`; exposes `saveXml()` and `importXml()` (returns the error instead of replacing the diagram). The page owns the dirty flag (set on `changed`, cleared on load/save) rather than a `dirtyChange` output; Zeebe properties panel (`BpmnPropertiesPanelModule`, `BpmnPropertiesProviderModule`, `ZeebePropertiesProviderModule`, `ZeebeBehaviorsModule`, `zeebe` moddle extension).
 - `/models/:id/edit`: toolbar (Save as new version + optional comment, Deploy (disabled until Phase 5), Export, Import into current model), canvas + panel side by side, dirty indicator, `CanDeactivate` guard + `beforeunload`.
 - **Verify:** create a service task with a job type, save, reload → properties persisted as `zeebe:` extensions; leaving with unsaved changes prompts; bpmn.io logo visible.
 

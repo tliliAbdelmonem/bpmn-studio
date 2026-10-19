@@ -44,7 +44,9 @@ Note: npm `latest` is already Angular 22 / NestJS 12. Always install with an exp
 - Pages are thin. bpmn-js logic lives in reusable components under `apps/web/src/app/bpmn/`.
 - Shared DTO types come from `@bpmn-studio/shared`; never redeclare API shapes in the web app.
 - Reuse the UI primitives in `apps/web/src/app/shared/ui/`: `bsButton` directive (variants primary/secondary/danger/ghost), `bs-dialog` (native `<dialog>`), `bs-confirm-dialog`, `bs-toast-outlet` + `ToastService`. API errors are `ProblemDetails`; show them with `problemMessage()`.
-- Read-only diagrams use `bs-bpmn-viewer` (`apps/web/src/app/bpmn/bpmn-viewer.ts`); bpmn-js stays in lazy chunks.
+- Read-only diagrams use `bs-bpmn-viewer` (`apps/web/src/app/bpmn/bpmn-viewer.ts`); editing uses `bs-bpmn-modeler` (`bpmn-modeler.ts`: Modeler + Zeebe properties panel + Camunda Cloud behaviors). bpmn-js stays in lazy chunks.
+- Routed pages with unsaved state implement `HasUnsavedChanges` and use `unsavedChangesGuard`, plus a `(window:beforeunload)` host listener.
+- Web unit tests stub `bs-bpmn-modeler` (bpmn-js needs real layout). `apps/web/vitest.config.ts` inlines `@bpmn-io/properties-panel` because its vendored preact fails Node's ESM resolution.
 
 ### bpmn-js integration rules
 
@@ -52,7 +54,7 @@ Note: npm `latest` is already Angular 22 / NestJS 12. Always install with an exp
 - Call `destroy()` in `ngOnDestroy`.
 - Guard with `isPlatformBrowser`.
 - Missing typings go in `apps/web/src/bpmn.d.ts`.
-- Register CSS globally in `apps/web/src/styles.css`: `bpmn-js/dist/assets/diagram-js.css`, `bpmn-js/dist/assets/bpmn-js.css`, `bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css` (done), `@bpmn-io/properties-panel/dist/assets/properties-panel.css` (Phase 4).
+- Register CSS globally in `apps/web/src/styles.css`: `bpmn-js/dist/assets/diagram-js.css`, `bpmn-js/dist/assets/bpmn-js.css`, `bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css`, `@bpmn-io/properties-panel/dist/assets/properties-panel.css` (all done).
 - **Keep the bpmn.io watermark/logo visible** (bpmn-js license). Never hide it with CSS.
 - Emit changes to the page via signal outputs; the component never calls the API.
 
@@ -106,7 +108,7 @@ Local URLs: API http://localhost:3000/api, Swagger http://localhost:3000/api/doc
 
 ## Pinned versions
 
-Nx 22.7.12, Angular 21.2.x, NestJS 11, TypeScript 5.9, TypeORM 0.3.31, Tailwind 4.3.3, bpmn-js 18.31.0, bpmn-moddle 10.3.1, zeebe-bpmn-moddle 2.0.0, Camunda 8.10.4 (`camunda/camunda`), Postgres 17.6. Angular runs zoneless (no zone.js).
+Nx 22.7.12, Angular 21.2.x, NestJS 11, TypeScript 5.9, TypeORM 0.3.31, Tailwind 4.3.3, bpmn-js 18.31.0, bpmn-moddle 10.3.1, zeebe-bpmn-moddle 2.0.0, bpmn-js-properties-panel 5.65.2, @bpmn-io/properties-panel 3.57.1, camunda-bpmn-js-behaviors 1.18.0, Camunda 8.10.4 (`camunda/camunda`), Postgres 17.6. Angular runs zoneless (no zone.js).
 
 ## Repository layout (short)
 

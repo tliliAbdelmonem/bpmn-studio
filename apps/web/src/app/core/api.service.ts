@@ -6,6 +6,7 @@ import {
   BpmnModelVersionDto,
   BpmnModelVersionSummaryDto,
   CreateModelRequest,
+  CreateVersionRequest,
   HealthDto,
   ProblemDetails,
   UpdateModelRequest,
@@ -75,6 +76,12 @@ export class ApiService {
   getVersion(modelId: string, versionNumber: number): Observable<BpmnModelVersionDto> {
     return this.request(
       this.http.get<BpmnModelVersionDto>(this.url(`/models/${modelId}/versions/${versionNumber}`)),
+    );
+  }
+
+  createVersion(modelId: string, body: CreateVersionRequest): Observable<BpmnModelVersionDto> {
+    return this.request(
+      this.http.post<BpmnModelVersionDto>(this.url(`/models/${modelId}/versions`), body),
     );
   }
 

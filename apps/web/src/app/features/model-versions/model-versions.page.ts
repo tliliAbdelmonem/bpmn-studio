@@ -45,6 +45,7 @@ import { ConfirmDialog } from '../../shared/ui/confirm-dialog';
     } @else {
       <div class="mt-2 flex flex-wrap items-center gap-3">
         <h1 class="me-auto text-2xl font-semibold">Version history</h1>
+        <a bsButton="secondary" [routerLink]="['/models', id(), 'edit']">Open editor</a>
         @if (selected(); as version) {
           <button
             type="button"

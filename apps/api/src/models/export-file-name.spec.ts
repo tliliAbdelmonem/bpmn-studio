@@ -1,4 +1,4 @@
-import { exportFileName } from './export-file-name';
+import { exportFileName } from '@bpmn-studio/shared';
 
 describe('exportFileName', () => {
   it('keeps simple names', () => {

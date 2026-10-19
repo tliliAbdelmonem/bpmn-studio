@@ -10,11 +10,14 @@ import {
   Res,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiParam, ApiProduces, ApiTags } from '@nestjs/swagger';
-import { BpmnModelVersionDto, BpmnModelVersionSummaryDto } from '@bpmn-studio/shared';
+import {
+  BpmnModelVersionDto,
+  BpmnModelVersionSummaryDto,
+  exportFileName,
+} from '@bpmn-studio/shared';
 import type { Response } from 'express';
 import { ApiProblems } from '../common/api-problems.decorator';
 import { CreateVersionBody, VersionResponse, VersionSummaryResponse } from './dto/version.dto';
-import { exportFileName } from './export-file-name';
 import { ModelsService } from './models.service';
 import { VersionsService } from './versions.service';
 

@@ -66,7 +66,7 @@ type FormState = { kind: 'create' } | { kind: 'rename'; model: BpmnModelDto };
               <tr class="hover:bg-slate-50">
                 <td class="px-4 py-3">
                   <a
-                    [routerLink]="['/models', model.id, 'versions']"
+                    [routerLink]="['/models', model.id, 'edit']"
                     class="font-medium text-slate-900 hover:text-indigo-600"
                     >{{ model.name }}</a
                   >
@@ -90,6 +90,7 @@ type FormState = { kind: 'create' } | { kind: 'rename'; model: BpmnModelDto };
                 </td>
                 <td class="px-4 py-3">
                   <div class="flex justify-end gap-1">
+                    <a bsButton="ghost" [routerLink]="['/models', model.id, 'edit']">Edit</a>
                     <a bsButton="ghost" [routerLink]="['/models', model.id, 'versions']">History</a>
                     <button
                       type="button"
@@ -206,7 +207,7 @@ export class ModelsPage {
         (model) => {
           this.form.set(null);
           this.toasts.success(`Created "${model.name}".`);
-          void this.router.navigate(['/models', model.id, 'versions']);
+          void this.router.navigate(['/models', model.id, 'edit']);
         },
       );
     } else {

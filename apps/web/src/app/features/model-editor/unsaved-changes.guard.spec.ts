@@ -1,0 +1,26 @@
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { HasUnsavedChanges, unsavedChangesGuard } from './unsaved-changes.guard';
+
+const run = (dirty: boolean) =>
+  unsavedChangesGuard(
+    { hasUnsavedChanges: () => dirty } satisfies HasUnsavedChanges,
+    {} as ActivatedRouteSnapshot,
+    {} as RouterStateSnapshot,
+    {} as RouterStateSnapshot,
+  );
+
+describe('unsavedChangesGuard', () => {
+  afterEach(() => vi.restoreAllMocks());
+
+  it('lets a clean page go without asking', () => {
+    const confirm = vi.spyOn(window, 'confirm');
+    expect(run(false)).toBe(true);
+    expect(confirm).not.toHaveBeenCalled();
+  });
+
+  it('asks before leaving unsaved changes', () => {
+    vi.spyOn(window, 'confirm').mockReturnValueOnce(false).mockReturnValueOnce(true);
+    expect(run(true)).toBe(false);
+    expect(run(true)).toBe(true);
+  });
+});
